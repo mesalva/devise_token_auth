@@ -228,8 +228,11 @@ module DeviseTokenAuth
     end
 
     def password_resource_params
-      params.permit(*params_for_resource(:account_update))
+      params.require(symbolized_resource).permit(*params_for_resource(:account_update))
     end
 
+    def symbolized_resource
+      resource_class.to_s.parameterize.to_sym
+    end
   end
 end

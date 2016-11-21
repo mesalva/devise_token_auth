@@ -141,8 +141,11 @@ module DeviseTokenAuth
     private
 
     def resource_params
-      params.permit(*params_for_resource(:sign_in))
+      params.require(symbolized_resource).permit(*params_for_resource(:sign_in))
     end
 
+    def symbolized_resource
+      resource_class.to_s.parameterize.to_sym
+    end
   end
 end
